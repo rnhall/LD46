@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 
 public class MeshAgent : MonoBehaviour
@@ -11,10 +12,12 @@ public class MeshAgent : MonoBehaviour
 
     public NavMeshAgent agent;
 
+    public ThirdPersonCharacter character;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        agent.updateRotation = false;
     }
 
     // Update is called once per frame
@@ -30,5 +33,7 @@ public class MeshAgent : MonoBehaviour
                 agent.SetDestination(hit.point);
             }
         }
+
+        character.Move(agent.desiredVelocity, false, false);
     }
 }
