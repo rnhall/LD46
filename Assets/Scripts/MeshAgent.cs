@@ -34,6 +34,18 @@ public class MeshAgent : MonoBehaviour
             }
         }
 
-        character.Move(agent.desiredVelocity, false, false);
+        if (agent.remainingDistance > agent.stoppingDistance)
+        {
+            character.Move(agent.desiredVelocity, false, false);
+        } else
+        {
+            character.Move(Vector3.zero, false, false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Rigidbody rb = GetComponent<Rigidbody>();
+            rb.isKinematic = true;
+        }
     }
 }
