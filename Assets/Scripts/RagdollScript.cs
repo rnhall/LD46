@@ -14,13 +14,13 @@ public class RagdollScript : MonoBehaviour
     //game object that this script is attached to
     void SetKinematic(bool newValue)
     {
-        thisRB.isKinematic = newValue;
         //Get an array of components that are of type Rigidbody
         Rigidbody[] bodies = GetComponentsInChildren<Rigidbody>();
  
         //For each of the components in the array, treat the component as a Rigidbody and set its isKinematic property
         foreach (Rigidbody rb in bodies)
         {
+            rb.velocity = Vector3.zero;
             rb.isKinematic = newValue;
         }
     }
