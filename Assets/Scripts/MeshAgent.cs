@@ -12,16 +12,24 @@ public class MeshAgent : MonoBehaviour
     public NavMeshAgent agent;
     public ThirdPersonCharacter character;
     public Animator animator;
+    public Rigidbody rootrb;
+
+    public bool roaming;
+    public int roamRadius;
+    public int roamTimerConst = 100;
+    public int roamTimer;
 
     // Start is called before the first frame update
     void Start()
     {
+        roaming = true;
+        roamTimer = 0;
         SetKinematic(true);
         agent.updateRotation = false;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -34,21 +42,38 @@ public class MeshAgent : MonoBehaviour
             }
         }
 
-        if (agent.remainingDistance > agent.stoppingDistance && agent.enabled)
+        if (roaming & agent.enabled)
         {
-            character.Move(agent.desiredVelocity, false, false);
+            if (roamTimer <= 0)
+            {
+                agent.SetDestination(RandomNavmeshLocation(roamRadius));
+                roamTimer = (int)Random.Range(100, 1000);
+            }
+
+            roamTimer -= 1;
         }
-        else if (agent.enabled)
+
+        if (agent.enabled)
         {
-            character.Move(Vector3.zero, false, false);
+            if (agent.remainingDistance > agent.stoppingDistance)
+            {
+                character.Move(agent.desiredVelocity, false, false);
+            }
+            else
+            {
+                character.Move(Vector3.zero, false, false);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             agent.enabled = false;
+            character.enabled = false;
+            CapsuleCollider cc = GetComponent<CapsuleCollider>();
+            cc.enabled = false;
             animator.enabled = false;
             SetKinematic(false);
-            //animator.enabled = false;
+            rootrb.isKinematic = true;
         }
     }
 
@@ -60,9 +85,24 @@ public class MeshAgent : MonoBehaviour
         //For each of the components in the array, treat the component as a Rigidbody and set its isKinematic property
         foreach (Rigidbody rb in bodies)
         {
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
             rb.isKinematic = newValue;
+            //rb.velocity = Vector3.zero;
+            //rb.angularVelocity = Vector3.zero;
+            //rb.drag = 1;
+            //rb.angularDrag = 1;
         }
+    }
+
+    public Vector3 RandomNavmeshLocation(float radius)
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * radius;
+        randomDirection += transform.position;
+        NavMeshHit hit;
+        Vector3 finalPosition = Vector3.zero;
+        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
+        {
+            finalPosition = hit.position;
+        }
+        return finalPosition;
     }
 }
