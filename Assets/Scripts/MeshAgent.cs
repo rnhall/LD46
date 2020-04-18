@@ -12,6 +12,7 @@ public class MeshAgent : MonoBehaviour
     public NavMeshAgent agent;
     public ThirdPersonCharacter character;
     public Animator animator;
+    public Rigidbody rootrb;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,7 @@ public class MeshAgent : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -34,21 +35,27 @@ public class MeshAgent : MonoBehaviour
             }
         }
 
-        if (agent.remainingDistance > agent.stoppingDistance && agent.enabled)
+        if (agent.enabled)
         {
-            character.Move(agent.desiredVelocity, false, false);
-        }
-        else if (agent.enabled)
-        {
-            character.Move(Vector3.zero, false, false);
+            if (agent.remainingDistance > agent.stoppingDistance)
+            {
+                character.Move(agent.desiredVelocity, false, false);
+            }
+            else
+            {
+                character.Move(Vector3.zero, false, false);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             agent.enabled = false;
+            character.enabled = false;
+            CapsuleCollider cc = GetComponent<CapsuleCollider>();
+            cc.enabled = false;
             animator.enabled = false;
             SetKinematic(false);
-            //animator.enabled = false;
+            rootrb.isKinematic = true;
         }
     }
 
@@ -60,9 +67,11 @@ public class MeshAgent : MonoBehaviour
         //For each of the components in the array, treat the component as a Rigidbody and set its isKinematic property
         foreach (Rigidbody rb in bodies)
         {
+            rb.isKinematic = newValue;
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
-            rb.isKinematic = newValue;
+            rb.drag = 1;
+            rb.angularDrag = 1;
         }
     }
 }

@@ -59,4 +59,14 @@ public class PickUp : MonoBehaviour
     {
         isHolding = false;
     }
+
+    private void OnMouseOver()
+    {
+        item.GetComponent<MeshRenderer>().material.shader = Shader.Find("Custom/Outline");
+    }
+
+    private void OnMouseExit()
+    {
+        item.GetComponent<MeshRenderer>().material.shader = Shader.Find("Standard");
+    }
 }
