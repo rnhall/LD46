@@ -15,12 +15,17 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundMask;
 
     Vector3 velocity;
-    bool isGrounded;
+    public bool isGrounded;
+
+    private void Start()
+    {
+        isGrounded = true;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+    // isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if(isGrounded && velocity.y < 0)
         {
@@ -42,5 +47,25 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    //This function triggers every time this game object's collider hits another collider. 
+    private void OnCollisionEnter(Collision collision)
+    {
+        //This checks if the collision is a member of layer 9 ("Ground")
+        if (collision.gameObject.layer == 9)
+        {
+            //If touching, set isGrounded to true
+            isGrounded = true;
+        }
+    }
+
+    //Same as the statement above, just opposite. 
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.layer == 9)
+        {
+            isGrounded = false;
+        }
     }
 }
