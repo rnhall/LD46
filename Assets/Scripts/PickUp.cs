@@ -62,7 +62,11 @@ public class PickUp : MonoBehaviour
 
     private void OnMouseOver()
     {
-        item.GetComponent<MeshRenderer>().material.shader = Shader.Find("Custom/Outline");
+        distance = Vector3.Distance(item.transform.position, tempParent.transform.position);
+        if (distance < 2f)
+        {
+            item.GetComponent<MeshRenderer>().material.shader = Shader.Find("Custom/Outline");
+        }
     }
 
     private void OnMouseExit()
