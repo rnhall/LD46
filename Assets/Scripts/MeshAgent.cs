@@ -14,9 +14,16 @@ public class MeshAgent : MonoBehaviour
     public Animator animator;
     public Rigidbody rootrb;
 
+    public bool roaming;
+    public int roamRadius;
+    public int roamTimerConst = 100;
+    public int roamTimer;
+
     // Start is called before the first frame update
     void Start()
     {
+        roaming = true;
+        roamTimer = 0;
         SetKinematic(true);
         agent.updateRotation = false;
     }
@@ -33,6 +40,17 @@ public class MeshAgent : MonoBehaviour
             {
                 agent.SetDestination(hit.point);
             }
+        }
+
+        if (roaming & agent.enabled)
+        {
+            if (roamTimer <= 0)
+            {
+                agent.SetDestination(RandomNavmeshLocation(roamRadius));
+                roamTimer = (int)Random.Range(100, 1000);
+            }
+
+            roamTimer -= 1;
         }
 
         if (agent.enabled)
@@ -68,10 +86,23 @@ public class MeshAgent : MonoBehaviour
         foreach (Rigidbody rb in bodies)
         {
             rb.isKinematic = newValue;
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            rb.drag = 1;
-            rb.angularDrag = 1;
+            //rb.velocity = Vector3.zero;
+            //rb.angularVelocity = Vector3.zero;
+            //rb.drag = 1;
+            //rb.angularDrag = 1;
         }
+    }
+
+    public Vector3 RandomNavmeshLocation(float radius)
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * radius;
+        randomDirection += transform.position;
+        NavMeshHit hit;
+        Vector3 finalPosition = Vector3.zero;
+        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
+        {
+            finalPosition = hit.position;
+        }
+        return finalPosition;
     }
 }
