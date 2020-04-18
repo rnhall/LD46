@@ -29,6 +29,7 @@ public class GrowBigger : MonoBehaviour
             if (timeT > 1)
             {
                 recentlyFed = false;
+                timeT = 0;
             }
         }
     }
