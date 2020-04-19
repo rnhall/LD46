@@ -12,7 +12,7 @@ public class KnockOut : MonoBehaviour
         {
             Debug.Log("Weapon contact!");
             animator.enabled = false;
-            SetKinematic(false);
+            //SetKinematic(false);
             Destroy(gameObject);
         }
     }
