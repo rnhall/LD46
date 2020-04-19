@@ -6,7 +6,7 @@ using UnityStandardAssets.Characters.ThirdPerson;
 
 public class CustomerAI : MonoBehaviour
 { 
-    public Camera camera;
+    // public Camera camera;
     public NavMeshAgent agent;
     public ThirdPersonCharacter character;
     public Animator animator;
@@ -28,16 +28,16 @@ public class CustomerAI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                agent.SetDestination(hit.point);
-            }
-        }
+        // if (Input.GetMouseButtonDown(0))
+        //{
+        //    Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        //    RaycastHit hit;
+        
+        //    if (Physics.Raycast(ray, out hit))
+         //   {
+           //     agent.SetDestination(hit.point);
+            //}
+        //}
 
         if (roaming && agent.enabled)
         {
@@ -62,7 +62,7 @@ public class CustomerAI : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             agent.enabled = false;
             character.enabled = false;
