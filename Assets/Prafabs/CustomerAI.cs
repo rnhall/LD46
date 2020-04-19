@@ -103,6 +103,15 @@ public class CustomerAI : MonoBehaviour
         return finalPosition;
     }
 
-
+    public void MakeRagdoll()
+    {
+        agent.enabled = false;
+        character.enabled = false;
+        CapsuleCollider cc = GetComponent<CapsuleCollider>();
+        cc.enabled = false;
+        animator.enabled = false;
+        SetKinematic(false);
+        rootrb.isKinematic = true;
+    }
 }
 
