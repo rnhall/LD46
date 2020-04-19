@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class KnockOut : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Animator animator;
 
-    // Update is called once per frame
-    void Update()
+    void OnTriggerEnter(Collider collider)
     {
-        
+        if (collider.gameObject.tag == "Weapon")
+        {
+            Debug.Log("Weapon contact!");
+            animator.enabled = false;
+            SetKinematic(false);
+            Destroy(gameObject);
+        }
     }
 }
