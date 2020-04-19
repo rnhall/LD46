@@ -4550,6 +4550,7 @@ GameObject:
   - component: {fileID: 1783283140}
   - component: {fileID: 1783283139}
   - component: {fileID: 1783283143}
+  - component: {fileID: 1783283144}
   - component: {fileID: 1783283138}
   - component: {fileID: 1783283142}
   - component: {fileID: 1783283141}
@@ -4641,7 +4642,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1783283136}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: f5dc5497cb4f98349bdfdd4c523dcbd1, type: 2}
   m_CullingMode: 0
@@ -4659,7 +4660,7 @@ Animation:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1783283136}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Animation: {fileID: 0}
   m_Animations: []
@@ -4681,6 +4682,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDamage: 0
   attackRange: 0
+--- !u!114 &1783283144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783283136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 597f89b2577a30d468b22b7c683983d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1956668784
 GameObject:
   m_ObjectHideFlags: 0
@@ -14206,28 +14219,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec254a3fa81b6cb46b1c2e41552a4ba1, type: 3}
---- !u!1 &7630502010619230842 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4132903709830259514, guid: ec254a3fa81b6cb46b1c2e41552a4ba1,
-    type: 3}
-  m_PrefabInstance: {fileID: 5818645360113834304}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7630502010619230843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7630502010619230842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff240e3f1a683a348963436c928db0c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  handAnim: {fileID: 0}
-  MainCamera: {fileID: 0}
-  Guide: {fileID: 0}
-  myWeapon: {fileID: 0}
 --- !u!4 &7630502012388216689 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4132903708327597617, guid: ec254a3fa81b6cb46b1c2e41552a4ba1,
