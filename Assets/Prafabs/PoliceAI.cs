@@ -4,16 +4,15 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityStandardAssets.Characters.ThirdPerson;
 
-
-public class MeshAgent : MonoBehaviour
+public class PoliceAI : MonoBehaviour
 {
+    public GameObject player;
 
     public Camera camera;
     public NavMeshAgent agent;
     public ThirdPersonCharacter character;
     public Animator animator;
     public Rigidbody rootrb;
-    public bool isPolice;
 
     public bool roaming;
     public int roamRadius;
@@ -42,7 +41,7 @@ public class MeshAgent : MonoBehaviour
             }
         }
 
-        if (roaming & agent.enabled)
+        if (roaming && agent.enabled)
         {
             if (roamTimer <= 0)
             {
@@ -65,15 +64,9 @@ public class MeshAgent : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (playerInSight())
         {
-            agent.enabled = false;
-            character.enabled = false;
-            CapsuleCollider cc = GetComponent<CapsuleCollider>();
-            cc.enabled = false;
-            animator.enabled = false;
-            SetKinematic(false);
-            rootrb.isKinematic = true;
+            Debug.Log("Spotted!");
         }
     }
 
@@ -106,5 +99,21 @@ public class MeshAgent : MonoBehaviour
         return finalPosition;
     }
 
-
+    public bool playerInSight()
+    {
+        RaycastHit hit;
+        if (Physics.Linecast(this.transform.position, player.transform.position, out hit))
+        {
+            float angle = Vector3.Dot(agent.transform.forward, agent.transform.position - player.transform.position);
+            if (hit.collider.gameObject.layer != 9 && angle < 0)
+            {
+                Debug.DrawLine(agent.transform.position, player.transform.position, Color.black);
+                return true;
+            }
+        }
+        return false;
+    }
 }
+
+
+
