@@ -26,6 +26,7 @@ public class PlayerAttack : MonoBehaviour
         handAnim.SetBool("Attacking", true);
        if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log("Attack!");
             handAnim.SetBool("Attacking", true);
             DoAttack();
         }
