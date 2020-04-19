@@ -4,16 +4,13 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityStandardAssets.Characters.ThirdPerson;
 
-
-public class MeshAgent : MonoBehaviour
-{
-
+public class CustomerAI : MonoBehaviour
+{ 
     public Camera camera;
     public NavMeshAgent agent;
     public ThirdPersonCharacter character;
     public Animator animator;
     public Rigidbody rootrb;
-    public bool isPolice;
 
     public bool roaming;
     public int roamRadius;
@@ -42,7 +39,7 @@ public class MeshAgent : MonoBehaviour
             }
         }
 
-        if (roaming & agent.enabled)
+        if (roaming && agent.enabled)
         {
             if (roamTimer <= 0)
             {
@@ -108,3 +105,4 @@ public class MeshAgent : MonoBehaviour
 
 
 }
+
